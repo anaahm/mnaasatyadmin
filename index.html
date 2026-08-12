@@ -152,7 +152,39 @@
 <body>
 
     <!-- ========================================================= -->
-    <!--                       2. الهيكل (HTML)                    -->
+    <!--          2. سكربت التنقل وواجهة المستخدم (يعمل 100%)       -->
+    <!-- ========================================================= -->
+    <script>
+        // دالة التنقل الرئيسية المباشرة والمضادة للأعطال
+        function navigateTo(targetId) {
+            const views = document.querySelectorAll('.main-content .view');
+            const navItems = document.querySelectorAll('.sidebar .nav-links li');
+            
+            views.forEach(v => v.classList.remove('active-view'));
+            navItems.forEach(n => n.classList.remove('active'));
+            
+            const targetView = document.getElementById(targetId);
+            if(targetView) targetView.classList.add('active-view');
+            
+            const navLink = document.getElementById('nav-' + targetId);
+            if(navLink) navLink.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // دوال النوافذ المنبثقة
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) modal.classList.add('active');
+        }
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) modal.classList.remove('active');
+        }
+    </script>
+
+    <!-- ========================================================= -->
+    <!--                       3. الهيكل (HTML)                    -->
     <!-- ========================================================= -->
     
     <aside class="sidebar admin-sidebar">
@@ -161,13 +193,13 @@
             <p>وحدة التحكم المركزية</p>
         </div>
         <ul class="nav-links">
-            <li class="active" data-target="dashboard-view"><i class="fas fa-chart-pie"></i> الإحصائيات</li>
-            <li data-target="students-view"><i class="fas fa-users"></i> إدارة الطلاب</li>
-            <li data-target="courses-view"><i class="fas fa-folder-open"></i> إدارة الكورسات</li>
-            <li data-target="lessons-view"><i class="fas fa-video"></i> إدارة الدروس</li>
-            <li data-target="quizzes-view"><i class="fas fa-database"></i> بنك الأسئلة</li>
-            <li data-target="codes-view"><i class="fas fa-key"></i> أكواد التفعيل</li>
-            <li data-target="settings-view"><i class="fas fa-cogs"></i> إعدادات المنصة</li>
+            <li class="active" id="nav-dashboard-view" onclick="navigateTo('dashboard-view')"><i class="fas fa-chart-pie"></i> الإحصائيات</li>
+            <li id="nav-students-view" onclick="navigateTo('students-view')"><i class="fas fa-users"></i> إدارة الطلاب</li>
+            <li id="nav-courses-view" onclick="navigateTo('courses-view')"><i class="fas fa-folder-open"></i> إدارة الكورسات</li>
+            <li id="nav-lessons-view" onclick="navigateTo('lessons-view')"><i class="fas fa-video"></i> إدارة الدروس</li>
+            <li id="nav-quizzes-view" onclick="navigateTo('quizzes-view')"><i class="fas fa-database"></i> بنك الأسئلة</li>
+            <li id="nav-codes-view" onclick="navigateTo('codes-view')"><i class="fas fa-key"></i> أكواد التفعيل</li>
+            <li id="nav-settings-view" onclick="navigateTo('settings-view')"><i class="fas fa-cogs"></i> إعدادات المنصة</li>
         </ul>
         <div class="logout-area">
             <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
@@ -223,7 +255,7 @@
         <section id="courses-view" class="view">
             <div class="section-header">
                 <h2>الكورسات والمسارات التعليمية</h2>
-                <button class="primary-btn" id="open-course-modal"><i class="fas fa-plus"></i> إضافة كورس جديد</button>
+                <button class="primary-btn" onclick="openModal('course-modal'); document.getElementById('add-course-form').reset(); document.getElementById('modal-course-title').innerHTML='<i class=\'fas fa-folder-plus\'></i> إضافة كورس جديد'; window.editingCourseId=null;"><i class="fas fa-plus"></i> إضافة كورس جديد</button>
             </div>
             <div class="admin-table-container">
                 <table class="admin-table">
@@ -237,7 +269,7 @@
         <section id="lessons-view" class="view">
             <div class="section-header">
                 <h2>الدروس والمحتوى التعليمي</h2>
-                <button class="primary-btn" id="open-lesson-modal"><i class="fas fa-video"></i> إضافة درس جديد</button>
+                <button class="primary-btn" onclick="openModal('lesson-modal'); document.getElementById('add-lesson-form').reset(); if(window.quill) window.quill.root.innerHTML=''; document.getElementById('modal-lesson-title').innerHTML='<i class=\'fas fa-video\'></i> إضافة درس جديد'; window.editingLessonId=null;"><i class="fas fa-video"></i> إضافة درس جديد</button>
             </div>
             <div class="admin-table-container">
                 <table class="admin-table">
@@ -310,7 +342,7 @@
     <!-- نافذة إضافة/تعديل كورس -->
     <div class="modal-overlay" id="course-modal">
         <div class="modal-content">
-            <div class="modal-header"><h2 id="modal-course-title"><i class="fas fa-folder-plus"></i> إضافة كورس جديد</h2><button class="close-modal-btn"><i class="fas fa-times"></i></button></div>
+            <div class="modal-header"><h2 id="modal-course-title"><i class="fas fa-folder-plus"></i> إضافة كورس جديد</h2><button class="close-modal-btn" onclick="closeModal('course-modal')"><i class="fas fa-times"></i></button></div>
             <form id="add-course-form" onsubmit="event.preventDefault();">
                 <div class="form-group"><label>اسم الكورس</label><input type="text" id="course-name" required></div>
                 <div class="form-group"><label>الوصف</label><textarea id="course-desc" rows="3" required></textarea></div>
@@ -327,7 +359,7 @@
     <!-- نافذة إضافة/تعديل درس -->
     <div class="modal-overlay" id="lesson-modal">
         <div class="modal-content" style="max-width: 850px;">
-            <div class="modal-header"><h2 id="modal-lesson-title"><i class="fas fa-video"></i> صانع الدروس</h2><button class="close-modal-btn"><i class="fas fa-times"></i></button></div>
+            <div class="modal-header"><h2 id="modal-lesson-title"><i class="fas fa-video"></i> صانع الدروس</h2><button class="close-modal-btn" onclick="closeModal('lesson-modal')"><i class="fas fa-times"></i></button></div>
             <form id="add-lesson-form" onsubmit="event.preventDefault();">
                 <div class="form-row">
                     <div class="form-group half-width"><label>عنوان الدرس</label><input type="text" id="lesson-title" required></div>
@@ -353,7 +385,7 @@
     <!-- نافذة إدارة اشتراكات الطالب -->
     <div class="modal-overlay" id="student-manage-modal">
         <div class="modal-content">
-            <div class="modal-header"><h2><i class="fas fa-user-cog"></i> إدارة اشتراكات الطالب</h2><button class="close-modal-btn"><i class="fas fa-times"></i></button></div>
+            <div class="modal-header"><h2><i class="fas fa-user-cog"></i> إدارة اشتراكات الطالب</h2><button class="close-modal-btn" onclick="closeModal('student-manage-modal')"><i class="fas fa-times"></i></button></div>
             <h3 id="manage-student-name" style="margin-bottom: 15px; color: var(--admin-theme);"></h3>
             <div style="margin-bottom: 20px;">
                 <p style="font-weight: bold; margin-bottom: 10px;">الكورسات المشترك بها حالياً:</p>
@@ -375,11 +407,11 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <!-- ========================================================= -->
-    <!--                       3. أكواد البرمجة (JavaScript)       -->
+    <!--                       4. أكواد البرمجة (JavaScript)       -->
     <!-- ========================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, setDoc, getDoc, query, where, getDocs, updateDoc, arrayRemove, arrayUnion, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, setDoc, getDoc, query, where, getDocs, updateDoc, arrayRemove, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         const firebaseConfig = {
@@ -395,33 +427,14 @@
         const auth = getAuth(app);
 
         // متغيرات عامة لحفظ البيانات للوصول السريع
-        let globalCourses = {};
-        let editingCourseId = null;
-        let editingLessonId = null;
-        let managingStudentId = null;
+        window.globalCourses = {};
+        window.editingCourseId = null;
+        window.editingLessonId = null;
+        window.managingStudentId = null;
 
-        // ================= التنقل =================
-        const navItems = document.querySelectorAll('.nav-links li');
-        const views = document.querySelectorAll('.main-content .view');
-        navItems.forEach(item => item.addEventListener('click', () => {
-            views.forEach(v => v.classList.remove('active-view'));
-            navItems.forEach(n => n.classList.remove('active'));
-            document.getElementById(item.getAttribute('data-target'))?.classList.add('active-view');
-            item.classList.add('active');
-        }));
-
-        // ================= النوافذ والمحرر =================
-        const courseModal = document.getElementById('course-modal');
-        const lessonModal = document.getElementById('lesson-modal');
-        const studentManageModal = document.getElementById('student-manage-modal');
-        
-        window.openModal = function(modal) { if(modal) modal.classList.add('active'); }
-        window.closeModal = function(modal) { if(modal) modal.classList.remove('active'); }
-        document.querySelectorAll('.close-modal-btn').forEach(btn => btn.addEventListener('click', (e) => closeModal(e.target.closest('.modal-overlay'))));
-
-        let quill;
+        // تهيئة محرر النصوص
         if(document.getElementById('editor-container') && typeof Quill !== 'undefined') {
-            quill = new Quill('#editor-container', { 
+            window.quill = new Quill('#editor-container', { 
                 modules: { toolbar: [
                     ['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block'],
                     [{ 'header': 1 }, { 'header': 2 }], [{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -472,13 +485,13 @@
         };
 
         // ================= إدارة الطلاب واشتراكاتهم =================
-        let allStudents = [];
+        window.allStudents = [];
         onSnapshot(query(collection(db, "users"), where("role", "==", "student")), (snapshot) => {
             if(document.getElementById('stat-students')) document.getElementById('stat-students').textContent = snapshot.size;
             const tbody = document.getElementById('students-table-body');
-            allStudents = []; if(!tbody) return; tbody.innerHTML = '';
+            window.allStudents = []; if(!tbody) return; tbody.innerHTML = '';
             if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="5" class="text-center">لا يوجد طلاب.</td></tr>'; return; }
-            snapshot.forEach(d => { const s = d.data(); s.id = d.id; allStudents.push(s); renderStudentRow(s, tbody); });
+            snapshot.forEach(d => { const s = d.data(); s.id = d.id; window.allStudents.push(s); renderStudentRow(s, tbody); });
         });
 
         function renderStudentRow(student, tbody) {
@@ -489,15 +502,15 @@
                 <td>${student.stage}</td>
                 <td style="color:gold; font-weight:bold;">${student.points} <i class="fas fa-star"></i></td>
                 <td>
-                    <button class="action-btn manage" onclick="manageStudent('${student.id}')" title="إدارة الاشتراكات"><i class="fas fa-user-cog"></i></button>
-                    <button class="action-btn delete" onclick="deleteDocument('users', '${student.id}')" title="حذف الطالب"><i class="fas fa-trash"></i></button>
+                    <button class="action-btn manage" onclick="window.manageStudent('${student.id}')" title="إدارة الاشتراكات"><i class="fas fa-user-cog"></i></button>
+                    <button class="action-btn delete" onclick="window.deleteDocument('users', '${student.id}')" title="حذف الطالب"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>`;
         }
 
         window.manageStudent = async (studentId) => {
-            managingStudentId = studentId;
-            const student = allStudents.find(s => s.id === studentId);
+            window.managingStudentId = studentId;
+            const student = window.allStudents.find(s => s.id === studentId);
             if(!student) return;
             
             document.getElementById('manage-student-name').textContent = "الطالب: " + student.name;
@@ -509,44 +522,43 @@
                 list.innerHTML = '<li style="color:var(--text-muted);">لا يوجد اشتراكات مفعلة حالياً.</li>';
             } else {
                 enrolled.forEach(cId => {
-                    const cName = globalCourses[cId] || "كورس غير معروف";
-                    list.innerHTML += `<li><span>${cName}</span> <button onclick="removeCourseFromStudent('${cId}')"><i class="fas fa-times"></i> إيقاف</button></li>`;
+                    const cName = window.globalCourses[cId] || "كورس غير معروف";
+                    list.innerHTML += `<li><span>${cName}</span> <button onclick="window.removeCourseFromStudent('${cId}')"><i class="fas fa-times"></i> إيقاف</button></li>`;
                 });
             }
-            openModal(studentManageModal);
+            openModal('student-manage-modal');
         };
 
         window.removeCourseFromStudent = async (courseId) => {
-            if(!managingStudentId) return;
+            if(!window.managingStudentId) return;
             if(confirm('هل تريد إيقاف اشتراك هذا الطالب في هذا الكورس؟')) {
                 try {
-                    await updateDoc(doc(db, "users", managingStudentId), {
+                    await updateDoc(doc(db, "users", window.managingStudentId), {
                         enrolledCourses: arrayRemove(courseId)
                     });
-                    // Refresh modal
-                    const snap = await getDoc(doc(db, "users", managingStudentId));
+                    const snap = await getDoc(doc(db, "users", window.managingStudentId));
                     const updatedStudent = snap.data();
                     updatedStudent.id = snap.id;
-                    const idx = allStudents.findIndex(s => s.id === managingStudentId);
-                    if(idx !== -1) allStudents[idx] = updatedStudent;
-                    manageStudent(managingStudentId);
+                    const idx = window.allStudents.findIndex(s => s.id === window.managingStudentId);
+                    if(idx !== -1) window.allStudents[idx] = updatedStudent;
+                    window.manageStudent(window.managingStudentId);
                 } catch(e) { alert("خطأ: " + e.message); }
             }
         };
 
         document.getElementById('manual-add-course-btn')?.addEventListener('click', async () => {
             const courseId = document.getElementById('manual-add-course-select').value;
-            if(!courseId || !managingStudentId) return alert('اختر كورساً أولاً.');
+            if(!courseId || !window.managingStudentId) return alert('اختر كورساً أولاً.');
             try {
-                await updateDoc(doc(db, "users", managingStudentId), {
+                await updateDoc(doc(db, "users", window.managingStudentId), {
                     enrolledCourses: arrayUnion(courseId)
                 });
-                const snap = await getDoc(doc(db, "users", managingStudentId));
+                const snap = await getDoc(doc(db, "users", window.managingStudentId));
                 const updatedStudent = snap.data();
                 updatedStudent.id = snap.id;
-                const idx = allStudents.findIndex(s => s.id === managingStudentId);
-                if(idx !== -1) allStudents[idx] = updatedStudent;
-                manageStudent(managingStudentId);
+                const idx = window.allStudents.findIndex(s => s.id === window.managingStudentId);
+                if(idx !== -1) window.allStudents[idx] = updatedStudent;
+                window.manageStudent(window.managingStudentId);
                 alert("تم التفعيل بنجاح.");
             } catch(e) { alert("خطأ: " + e.message); }
         });
@@ -558,7 +570,7 @@
             const cSelect = document.getElementById('lesson-course-select');
             const manualSelect = document.getElementById('manual-add-course-select');
             
-            globalCourses = {};
+            window.globalCourses = {};
             if(tbody) tbody.innerHTML = ''; 
             if(cSelect) cSelect.innerHTML = '<option value="" disabled selected>اختر الكورس...</option>';
             if(manualSelect) manualSelect.innerHTML = '<option value="" disabled selected>اختر كورس لتفعيله...</option>';
@@ -567,15 +579,15 @@
             
             snapshot.forEach(d => {
                 const c = d.data();
-                globalCourses[d.id] = c.name;
+                window.globalCourses[d.id] = c.name;
                 if(tbody) tbody.innerHTML += `
                 <tr>
                     <td style="font-weight:bold;">${c.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${c.name}</td>
                     <td>${c.description.substring(0,30)}...</td>
                     <td><span class="badge ${c.type === 'paid' ? 'badge-paid' : 'badge-free'}">${c.type === 'paid' ? 'باشتراك' : 'مجاني'}</span></td>
                     <td>
-                        <button class="action-btn edit" onclick="editCourse('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete" onclick="deleteDocument('courses', '${d.id}')" title="حذف"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="window.editCourse('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteDocument('courses', '${d.id}')" title="حذف"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`;
                 if(cSelect) cSelect.innerHTML += `<option value="${d.id}">${c.name}</option>`;
@@ -583,15 +595,8 @@
             });
         });
 
-        document.getElementById('open-course-modal')?.addEventListener('click', () => {
-            editingCourseId = null;
-            document.getElementById('add-course-form').reset();
-            document.getElementById('modal-course-title').innerHTML = '<i class="fas fa-folder-plus"></i> إضافة كورس جديد';
-            openModal(courseModal);
-        });
-
         window.editCourse = async (id) => {
-            editingCourseId = id;
+            window.editingCourseId = id;
             try {
                 const docSnap = await getDoc(doc(db, "courses", id));
                 if(docSnap.exists()){
@@ -601,7 +606,7 @@
                     document.getElementById('course-image').value = c.imageUrl || '';
                     document.getElementById('course-type').value = c.type;
                     document.getElementById('modal-course-title').innerHTML = '<i class="fas fa-edit"></i> تعديل الكورس';
-                    openModal(courseModal);
+                    openModal('course-modal');
                 }
             } catch(e) { alert("خطأ في جلب البيانات."); }
         };
@@ -618,8 +623,8 @@
             };
 
             try {
-                if(editingCourseId) {
-                    await updateDoc(doc(db, "courses", editingCourseId), courseData);
+                if(window.editingCourseId) {
+                    await updateDoc(doc(db, "courses", window.editingCourseId), courseData);
                     alert('✅ تم التعديل.');
                 } else {
                     courseData.createdAt = new Date().toLocaleDateString('ar-EG');
@@ -627,7 +632,7 @@
                     alert('✅ تم الإضافة.');
                 }
                 document.getElementById('add-course-form').reset(); 
-                closeModal(courseModal);
+                closeModal('course-modal');
             } catch (err) { alert('❌ خطأ: ' + err.message); }
             finally { e.target.textContent = "حفظ الكورس"; e.target.disabled = false; }
         });
@@ -639,30 +644,22 @@
             if(snapshot.empty) { tbody.innerHTML = '<tr><td colspan="4" class="text-center">لا توجد دروس.</td></tr>'; return; }
             snapshot.forEach(d => {
                 const l = d.data();
-                const cName = globalCourses[l.courseId] || "كورس غير معروف";
+                const cName = window.globalCourses[l.courseId] || "كورس غير معروف";
                 tbody.innerHTML += `
                 <tr>
                     <td style="font-weight:bold;">${l.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${l.title}</td>
                     <td style="font-size:13px; color:var(--text-muted);">${cName}</td>
                     <td><span class="badge ${l.quizGroup !== 'none' ? 'badge-free' : 'badge-paid'}">${l.quizGroup !== 'none' ? 'يوجد' : 'بدون'}</span></td>
                     <td>
-                        <button class="action-btn edit" onclick="editLesson('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
-                        <button class="action-btn delete" onclick="deleteDocument('lessons', '${d.id}')" title="حذف"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn edit" onclick="window.editLesson('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteDocument('lessons', '${d.id}')" title="حذف"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
         });
 
-        document.getElementById('open-lesson-modal')?.addEventListener('click', () => {
-            editingLessonId = null;
-            document.getElementById('add-lesson-form').reset();
-            if(quill) quill.root.innerHTML = '';
-            document.getElementById('modal-lesson-title').innerHTML = '<i class="fas fa-video"></i> إضافة درس جديد';
-            openModal(lessonModal);
-        });
-
         window.editLesson = async (id) => {
-            editingLessonId = id;
+            window.editingLessonId = id;
             try {
                 const docSnap = await getDoc(doc(db, "lessons", id));
                 if(docSnap.exists()){
@@ -672,9 +669,9 @@
                     document.getElementById('lesson-video').value = l.videoUrl || '';
                     document.getElementById('lesson-image').value = l.imageUrl || '';
                     document.getElementById('lesson-quiz-select').value = l.quizGroup || 'none';
-                    if(quill) quill.root.innerHTML = l.contentHTML || '';
+                    if(window.quill) window.quill.root.innerHTML = l.contentHTML || '';
                     document.getElementById('modal-lesson-title').innerHTML = '<i class="fas fa-edit"></i> تعديل الدرس';
-                    openModal(lessonModal);
+                    openModal('lesson-modal');
                 }
             } catch(e) { alert("خطأ في جلب البيانات."); }
         };
@@ -688,13 +685,13 @@
                 title, courseId: cId, 
                 videoUrl: document.getElementById('lesson-video').value.trim(), 
                 imageUrl: document.getElementById('lesson-image').value.trim(), 
-                contentHTML: quill ? quill.root.innerHTML : "", 
+                contentHTML: window.quill ? window.quill.root.innerHTML : "", 
                 quizGroup: document.getElementById('lesson-quiz-select').value
             };
 
             try {
-                if(editingLessonId) {
-                    await updateDoc(doc(db, "lessons", editingLessonId), lessonData);
+                if(window.editingLessonId) {
+                    await updateDoc(doc(db, "lessons", window.editingLessonId), lessonData);
                     alert('✅ تم تعديل الدرس بنجاح.');
                 } else {
                     lessonData.createdAt = new Date().toLocaleDateString('ar-EG');
@@ -702,8 +699,8 @@
                     alert('✅ تم نشر الدرس الجديد بنجاح.');
                 }
                 document.getElementById('add-lesson-form').reset(); 
-                if(quill) quill.root.innerHTML = ''; 
-                closeModal(lessonModal); 
+                if(window.quill) window.quill.root.innerHTML = ''; 
+                closeModal('lesson-modal'); 
             } catch (err) { alert('❌ خطأ: ' + err.message); }
             finally { e.target.innerHTML = '<i class="fas fa-save"></i> حفظ الدرس'; e.target.disabled = false; }
         });
@@ -785,7 +782,7 @@
                 if(c.status !== 'غير مستخدم') {
                     const icon = c.status === 'موقوف' ? 'fa-play' : 'fa-ban';
                     const title = c.status === 'موقوف' ? 'تفعيل الكود' : 'إيقاف الكود مؤقتاً';
-                    toggleBtnHtml = `<button class="action-btn suspend" onclick="toggleCodeStatus('${d.id}', '${c.status}')" title="${title}"><i class="fas ${icon}"></i></button>`;
+                    toggleBtnHtml = `<button class="action-btn suspend" onclick="window.toggleCodeStatus('${d.id}', '${c.status}')" title="${title}"><i class="fas ${icon}"></i></button>`;
                 }
 
                 tbody.innerHTML += `
@@ -796,7 +793,7 @@
                     <td style="font-size:12px; color:var(--text-muted);">${c.usedBy ? c.usedBy : '-'}</td>
                     <td>
                         ${toggleBtnHtml}
-                        <button class="action-btn delete" onclick="deleteDocument('codes', '${d.id}')" title="حذف نهائي"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn delete" onclick="window.deleteDocument('codes', '${d.id}')" title="حذف نهائي"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
