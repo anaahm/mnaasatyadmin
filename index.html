@@ -38,11 +38,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', Tahoma, sans-serif; }
         body { background-color: var(--bg-color); display: flex; min-height: 100vh; color: var(--text-dark); overflow-x: hidden;}
 
+        /* زر القائمة الجانبية للموبايل */
+        .menu-toggle { display: none; background: var(--admin-theme); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-size: 20px; cursor: pointer;}
+
         /* القائمة الجانبية الفخمة */
         .admin-sidebar { 
             width: var(--sidebar-width); background: var(--main-gradient); color: white; 
             display: flex; flex-direction: column; padding: 30px 0; position: fixed; 
             height: 100vh; right: 0; top: 0; z-index: 100; box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: var(--transition);
         }
         .logo-area { text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; margin-bottom: 20px;}
         .logo-area h2 { color: white; font-size: 26px; font-weight: 900; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);}
@@ -60,7 +64,7 @@
         .logout-sidebar-btn:hover { background: var(--danger-gradient); color: white;}
 
         /* المحتوى الرئيسي */
-        .main-content { flex-grow: 1; margin-right: var(--sidebar-width); padding: 40px 50px; min-height: 100vh;}
+        .main-content { flex-grow: 1; margin-right: var(--sidebar-width); padding: 40px 50px; min-height: 100vh; transition: var(--transition);}
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);}
         .welcome-text h1 { font-size: 28px; color: var(--text-dark); margin-bottom: 5px; font-weight: 900;}
         .welcome-text p { color: var(--text-muted); font-size: 16px; font-weight: 700;}
@@ -91,32 +95,32 @@
         .search-box i { position: absolute; right: 20px; top: 18px; color: var(--text-muted); font-size: 18px;}
 
         /* بطاقات الإحصائيات */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 40px;}
-        .stat-card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 20px; border: 1px solid var(--border-color); transition: var(--transition); position: relative; overflow: hidden;}
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px;}
+        .stat-card { background: var(--card-bg); padding: 25px; border-radius: 20px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 20px; border: 1px solid var(--border-color); transition: var(--transition); position: relative; overflow: hidden;}
         .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background: var(--accent-gradient);}
         .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg);}
-        .stat-icon { width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 16px; font-size: 32px; box-shadow: inset 0 -3px 5px rgba(0,0,0,0.1);}
-        .stat-info h3 { font-size: 16px; color: var(--text-muted); margin-bottom: 5px; font-weight: 800;}
-        .stat-info p { font-size: 32px; font-weight: 900; color: var(--text-dark); }
+        .stat-icon { width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; border-radius: 16px; font-size: 28px; box-shadow: inset 0 -3px 5px rgba(0,0,0,0.1); flex-shrink: 0;}
+        .stat-info h3 { font-size: 15px; color: var(--text-muted); margin-bottom: 5px; font-weight: 800;}
+        .stat-info p { font-size: 28px; font-weight: 900; color: var(--text-dark); }
 
-        /* الجداول */
-        .admin-table-container { background: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow-sm); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 40px;}
-        .admin-table { width: 100%; border-collapse: collapse; text-align: right; }
-        .admin-table th, .admin-table td { padding: 20px 25px; border-bottom: 1px solid var(--border-color); font-size: 16px;}
+        /* الجداول - مع إضافة التمرير الأفقي للموبايل */
+        .admin-table-container { background: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 40px; overflow-x: auto; -webkit-overflow-scrolling: touch;}
+        .admin-table { width: 100%; border-collapse: collapse; text-align: right; min-width: 800px; }
+        .admin-table th, .admin-table td { padding: 15px 20px; border-bottom: 1px solid var(--border-color); font-size: 15px;}
         .admin-table th { background-color: var(--bg-color); color: var(--text-muted); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;}
         .admin-table tr { transition: var(--transition); }
         .admin-table tr:hover { background-color: var(--bg-color); }
         
-        .badge { padding: 6px 16px; border-radius: 30px; font-size: 13px; font-weight: 900; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .badge { padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 900; box-shadow: 0 2px 5px rgba(0,0,0,0.05); white-space: nowrap;}
         .badge-paid { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5;}
         .badge-free { background: #d1fae5; color: #10b981; border: 1px solid #6ee7b7;}
         .badge-warning { background: #fef3c7; color: #d97706; border: 1px solid #fde047;}
         .badge-dark { background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1;}
         .badge-info { background: #e0e7ff; color: #4f46e5; border: 1px solid #a5b4fc;}
         
-        .bot-badge { background: #e0e7ff; color: #4f46e5; font-size: 12px; padding: 3px 8px; border-radius: 12px; font-weight: bold; margin-right: 10px; border: 1px solid #c7d2fe;}
+        .bot-badge { background: #e0e7ff; color: #4f46e5; font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: bold; margin-right: 5px; border: 1px solid #c7d2fe; white-space: nowrap;}
 
-        .action-btn { background: transparent; border: none; font-size: 20px; margin-left: 10px; cursor: pointer; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 10px;}
+        .action-btn { background: transparent; border: none; font-size: 18px; margin-left: 5px; cursor: pointer; transition: 0.2s; display: inline-flex; justify-content: center; align-items: center; width: 35px; height: 35px; border-radius: 8px;}
         .action-btn.delete { color: #ef4444; background: rgba(239, 68, 68, 0.1);}
         .action-btn.delete:hover { background: var(--danger-gradient); color: white; transform: scale(1.1); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);}
         .action-btn.edit { color: #f59e0b; background: rgba(245, 158, 11, 0.1);}
@@ -127,61 +131,79 @@
         .action-btn.view-report:hover { background: var(--accent-gradient); color: white; transform: scale(1.1); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);}
 
         /* النماذج والنوافذ المنبثقة */
-        .settings-container { background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); max-width: 900px;}
-        .form-group { margin-bottom: 25px; text-align: right; }
-        .form-group label { display: block; font-weight: 900; margin-bottom: 10px; font-size: 16px; color: var(--text-dark);}
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 15px; border: 2px solid var(--border-color); border-radius: 12px; outline: none; font-size: 16px; background: var(--bg-color); font-family: 'Cairo'; transition: var(--transition); color: var(--text-dark); font-weight: 700;}
+        .settings-container { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); max-width: 900px;}
+        .form-group { margin-bottom: 20px; text-align: right; }
+        .form-group label { display: block; font-weight: 900; margin-bottom: 8px; font-size: 15px; color: var(--text-dark);}
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 15px; border: 2px solid var(--border-color); border-radius: 12px; outline: none; font-size: 15px; background: var(--bg-color); font-family: 'Cairo'; transition: var(--transition); color: var(--text-dark); font-weight: 700;}
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--admin-accent); background: white; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);}
-        .form-row { display: flex; gap: 20px; }
+        .form-row { display: flex; gap: 15px; }
         .half-width { flex: 1; }
         #json-data-input { font-family: monospace; direction: ltr; text-align: left; background: #1e293b; color: #a5b4fc; border: none;}
         
         /* التنبيهات */
-        .toast-container { position: fixed; top: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast-notification { background: var(--card-bg); border-right: 6px solid var(--admin-accent); padding: 18px 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; font-weight: 900; font-family: 'Cairo'; animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOut 0.5s ease 4s forwards;}
+        .toast-container { position: fixed; top: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
+        .toast-notification { background: var(--card-bg); border-right: 5px solid var(--admin-accent); padding: 15px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; font-weight: 900; font-family: 'Cairo'; animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeOut 0.5s ease 4s forwards; pointer-events: auto;}
         .toast-notification.error { border-color: #ef4444; border-right-color: #ef4444;}
         .toast-notification.error i { color: #ef4444 !important; }
-        .toast-notification i { font-size: 28px; color: var(--admin-accent); }
+        .toast-notification i { font-size: 24px; color: var(--admin-accent); }
         @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
 
         /* النوافذ المنبثقة */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(8px); padding: 20px;}
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(8px); padding: 15px;}
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background: var(--card-bg); width: 100%; max-width: 650px; border-radius: 24px; padding: 40px; transform: scale(0.9); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;}
+        .modal-content { background: var(--card-bg); width: 100%; max-width: 650px; border-radius: 20px; padding: 30px; transform: scale(0.9); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;}
         .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
-        .modal-header h2 { font-size: 26px; color: var(--text-dark); font-weight: 900; display: flex; align-items: center; gap: 12px;}
-        .close-modal-btn { background: var(--bg-color); border: 2px solid var(--border-color); width: 45px; height: 45px; border-radius: 50%; font-size: 20px; color: var(--text-muted); cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center;}
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .modal-header h2 { font-size: 22px; color: var(--text-dark); font-weight: 900; display: flex; align-items: center; gap: 10px;}
+        .close-modal-btn { background: var(--bg-color); border: 2px solid var(--border-color); width: 40px; height: 40px; border-radius: 50%; font-size: 18px; color: var(--text-muted); cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center;}
         .close-modal-btn:hover { background: var(--danger-gradient); color: white; border-color: transparent; transform: rotate(90deg) scale(1.1);}
 
         /* القوائم والتقارير */
-        .student-courses-list { list-style: none; margin-bottom: 25px; border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden;}
-        .student-courses-list li { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--border-color); background: var(--bg-color);}
+        .student-courses-list { list-style: none; margin-bottom: 20px; border: 2px solid var(--border-color); border-radius: 12px; overflow: hidden;}
+        .student-courses-list li { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); background: var(--bg-color); font-size: 14px; font-weight: bold;}
         .student-courses-list li:last-child { border-bottom: none; }
-        .student-courses-list li button { background: var(--danger-gradient); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 900; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);}
+        .student-courses-list li button { background: var(--danger-gradient); color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 900; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); font-size: 12px;}
         
-        .report-section { background: var(--bg-color); border: 1px solid var(--border-color); padding: 25px; border-radius: 16px; margin-bottom: 20px; text-align: right;}
-        .report-section h3 { color: var(--admin-theme); margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-weight: 900; font-size: 20px;}
-        .report-section p { margin-bottom: 12px; font-size: 16px; font-weight: 700;}
+        .report-section { background: var(--bg-color); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 15px; text-align: right;}
+        .report-section h3 { color: var(--admin-theme); margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-weight: 900; font-size: 18px;}
+        .report-section p { margin-bottom: 10px; font-size: 15px; font-weight: 700;}
         
-        .questions-list { list-style: none; display: flex; flex-direction: column; gap: 15px; margin-top: 20px;}
-        .question-item { background: var(--bg-color); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;}
-        .question-item .q-text { font-weight: 800; flex: 1; font-size: 16px;}
+        .questions-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 20px;}
+        .question-item { background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;}
+        .question-item .q-text { font-weight: 800; flex: 1; font-size: 14px;}
 
         /* محرر النصوص Quill */
         .ql-toolbar.ql-snow { border: 2px solid var(--border-color) !important; border-radius: 12px 12px 0 0; background: var(--bg-color); direction: ltr;}
         .ql-container.ql-snow { border: 2px solid var(--border-color) !important; border-top: none !important; border-radius: 0 0 12px 12px; background: white; font-size: 16px;}
-        .ql-editor { font-family: 'Cairo', sans-serif; font-size: 18px; direction: rtl; text-align: right; min-height: 250px;}
+        .ql-editor { font-family: 'Cairo', sans-serif; font-size: 16px; direction: rtl; text-align: right; min-height: 200px;}
 
+        /* ================= دعم الهواتف المحمولة (Mobile Responsiveness) ================= */
         @media (max-width: 992px) {
-            .admin-sidebar { transform: translateX(100%); transition: var(--transition); }
-            .main-content { margin-right: 0; padding: 20px; }
-            .top-header { flex-direction: column; gap: 20px; text-align: center; }
-            .search-box { width: 100%; margin-top: 15px;}
+            .menu-toggle { display: block; }
+            .admin-sidebar { transform: translateX(100%); width: 260px;} /* إخفاء القائمة في الموبايل */
+            .admin-sidebar.open { transform: translateX(0); }
+            
+            .main-content { margin-right: 0; padding: 20px 15px; width: 100%;}
+            
+            .top-header { flex-direction: column; gap: 15px; text-align: center; padding: 20px;}
+            .welcome-text h1 { font-size: 24px; }
+            
             .section-header { flex-direction: column; gap: 15px; align-items: stretch; text-align: center;}
+            .section-header h2 { font-size: 22px; }
+            
+            .search-box { width: 100%; }
             .form-row { flex-direction: column; gap: 0;}
-            .admin-table-container { overflow-x: auto;}
+            
+            .stats-grid { grid-template-columns: 1fr; gap: 15px;}
+            .stat-card { padding: 20px; }
+            
+            .settings-container { padding: 20px; }
+            .modal-content { padding: 20px; width: 95%;}
+            .modal-header h2 { font-size: 18px;}
+            
+            /* أزرار الإجراءات في الجداول للموبايل */
+            .action-btn { width: 30px; height: 30px; font-size: 15px; margin-left: 3px;}
         }
     </style>
 </head>
@@ -194,6 +216,10 @@
     <!--          2. سكربت التنقل وواجهة المستخدم (نظام آمن)       -->
     <!-- ========================================================= -->
     <script>
+        function toggleMobileMenu() {
+            document.querySelector('.admin-sidebar').classList.toggle('open');
+        }
+
         function navigateTo(targetId) {
             const views = document.querySelectorAll('.main-content .view');
             const navItems = document.querySelectorAll('.sidebar .nav-links li');
@@ -209,6 +235,11 @@
             
             const navLink = document.getElementById('nav-' + targetId);
             if(navLink) navLink.classList.add('active');
+
+            // إغلاق القائمة في الموبايل بعد الاختيار
+            if(window.innerWidth <= 992) {
+                document.querySelector('.admin-sidebar').classList.remove('open');
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -243,36 +274,39 @@
         </div>
         <ul class="nav-links">
             <li class="active" id="nav-dashboard-view" onclick="navigateTo('dashboard-view')"><i class="fas fa-chart-pie"></i> الإحصائيات الشاملة</li>
-            <li id="nav-students-view" onclick="navigateTo('students-view')"><i class="fas fa-users-cog"></i> إدارة الطلاب (حقيقيين و وهميين)</li>
+            <li id="nav-students-view" onclick="navigateTo('students-view')"><i class="fas fa-users-cog"></i> إدارة الطلاب (والمنافسين)</li>
             <li id="nav-courses-view" onclick="navigateTo('courses-view')"><i class="fas fa-layer-group"></i> الكورسات والتسعير</li>
             <li id="nav-lessons-view" onclick="navigateTo('lessons-view')"><i class="fas fa-video"></i> الدروس المسجلة</li>
             <li id="nav-lives-view" onclick="navigateTo('lives-view')"><i class="fas fa-satellite-dish"></i> مركز البث المباشر <span class="live-indicator" style="margin-right: 5px;"></span></li>
             <li id="nav-quizzes-view" onclick="navigateTo('quizzes-view')"><i class="fas fa-brain"></i> بنك الأسئلة الذكي</li>
             <li id="nav-codes-view" onclick="navigateTo('codes-view')"><i class="fas fa-key"></i> الأكواد المخصصة</li>
             <li id="nav-settings-view" onclick="navigateTo('settings-view')"><i class="fas fa-cogs"></i> إعدادات المنصة</li>
-            <li class="logout-sidebar-btn" id="logout-btn"><i class="fas fa-power-off"></i> تسجيل الخروج</li>
+            <li class="logout-sidebar-btn" id="logout-btn"><i class="fas fa-power-off"></i> خروج وتأمين</li>
         </ul>
     </aside>
 
     <main class="main-content">
         <header class="top-header">
-            <div class="welcome-text">
-                <h1>مرحباً بك في وحدة التحكم ⚙️</h1>
-                <p>التحكم المطلق: طلاب، أكواد، بث مباشر، وبنك أسئلة.</p>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+                <div class="welcome-text">
+                    <h1>وحدة التحكم ⚙️</h1>
+                    <p>التحكم المطلق: طلاب، أكواد، وبنك أسئلة.</p>
+                </div>
             </div>
-            <div class="admin-profile"><span class="online-indicator"></span> متصل كمدير عام</div>
+            <div class="admin-profile"><span class="online-indicator"></span> متصل כمدير عام</div>
         </header>
 
         <!-- الإحصائيات -->
         <section id="dashboard-view" class="view active-view">
             <div class="section-header">
                 <h2>نظرة عامة على المنصة</h2>
-                <button class="danger-btn" onclick="window.resetLeaderboard()" style="padding: 12px 25px; font-size: 16px;"><i class="fas fa-redo-alt"></i> تصفير دوري المتصدرين بالكامل</button>
+                <button class="danger-btn" onclick="window.resetLeaderboard()" style="padding: 10px 20px; font-size: 15px;"><i class="fas fa-redo-alt"></i> تصفير دوري المتصدرين بالكامل</button>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon" style="color: #3b82f6; background: #eff6ff;"><i class="fas fa-users"></i></div>
-                    <div class="stat-info"><h3>إجمالي المسجلين (طلاب وبوتات)</h3><p id="stat-students">0</p></div>
+                    <div class="stat-info"><h3>إجمالي المسجلين (شامل الوهميين)</h3><p id="stat-students">0</p></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon" style="color: #10b981; background: #ecfdf5;"><i class="fas fa-book-open"></i></div>
@@ -293,14 +327,14 @@
         <section id="students-view" class="view">
             <div class="section-header">
                 <h2>إدارة الطلاب والمنافسين (Bots)</h2>
-                <div style="display: flex; gap: 15px;">
+                <div style="display: flex; gap: 10px; flex-direction: column;">
                     <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-student" placeholder="ابحث باسم الطالب..."></div>
-                    <button class="success-btn" onclick="openModal('bot-modal'); document.getElementById('add-bot-form').reset();"><i class="fas fa-robot"></i> إنشاء طالب منافس (Bot)</button>
+                    <button class="success-btn full-width" onclick="openModal('bot-modal'); document.getElementById('add-bot-form').reset();"><i class="fas fa-robot"></i> إنشاء طالب منافس (Bot)</button>
                 </div>
             </div>
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>الاسم (النوع)</th><th>رقم الهاتف</th><th>المرحلة</th><th>إجمالي النقاط</th><th>التحكم الشامل</th></tr></thead>
+                    <thead><tr><th>الاسم (النوع)</th><th>الهاتف</th><th>المرحلة</th><th>النقاط</th><th>التحكم</th></tr></thead>
                     <tbody id="students-table-body"><tr><td colspan="5" class="text-center" style="padding: 40px; font-weight: bold;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
@@ -314,7 +348,7 @@
             </div>
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>اسم الكورس</th><th>السعر المُحدد</th><th>النوع</th><th>الإجراءات</th></tr></thead>
+                    <thead><tr><th>اسم الكورس</th><th>السعر</th><th>النوع</th><th>الإجراءات</th></tr></thead>
                     <tbody id="courses-table-body"><tr><td colspan="4" class="text-center" style="padding: 40px; font-weight: bold;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
@@ -328,7 +362,7 @@
             </div>
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>عنوان الدرس</th><th>تابع لكورس</th><th>مربوط باختبار</th><th>الإجراءات</th></tr></thead>
+                    <thead><tr><th>عنوان الدرس</th><th>الكورس التابع له</th><th>الاختبار</th><th>الإجراءات</th></tr></thead>
                     <tbody id="lessons-table-body"><tr><td colspan="4" class="text-center" style="padding: 40px; font-weight: bold;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
@@ -338,12 +372,12 @@
         <section id="lives-view" class="view">
             <div class="section-header">
                 <h2>مركز البث المباشر (Live Hub)</h2>
-                <button class="danger-btn" onclick="openModal('live-modal'); document.getElementById('add-live-form').reset(); document.getElementById('modal-live-title').innerHTML='<i class=\'fas fa-satellite-dish\'></i> جدولة بث جديد'; window.editingLiveId=null;"><i class="fas fa-plus"></i> إضافة بث مباشر</button>
+                <button class="danger-btn" onclick="openModal('live-modal'); document.getElementById('add-live-form').reset(); document.getElementById('modal-live-title').innerHTML='<i class=\'fas fa-satellite-dish\'></i> جدولة بث جديد'; window.editingLiveId=null;"><i class="fas fa-plus"></i> جدولة بث</button>
             </div>
-            <p style="color:var(--text-muted); font-size:16px; font-weight: bold; margin-bottom: 20px; background: var(--bg-color); padding: 10px; border-radius: 8px;">ملاحظة: البث المباشر هنا سيظهر في منصة الطالب في قسم "مركز البث المباشر" حصراً، وسيكون مرئياً فقط للطلاب المشتركين في الكورس المحدد.</p>
+            <p style="color:var(--text-muted); font-size:14px; font-weight: bold; margin-bottom: 20px; background: var(--bg-color); padding: 10px; border-radius: 8px;">يظهر البث في منصة الطالب في قسم "مركز البث المباشر" حصراً للمشتركين.</p>
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>عنوان البث</th><th>الكورس التابع له</th><th>الموعد</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+                    <thead><tr><th>عنوان البث</th><th>الكورس</th><th>الموعد</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
                     <tbody id="lives-table-body"><tr><td colspan="5" class="text-center" style="padding: 40px; font-weight: bold;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
@@ -352,17 +386,17 @@
         <!-- بنك الأسئلة -->
         <section id="quizzes-view" class="view">
             <div class="section-header"><h2>بنك الأسئلة الذكي</h2></div>
-            <div class="settings-container" style="margin-bottom: 40px;">
-                <h3 style="margin-bottom: 20px; color: var(--text-dark); font-weight: 900;"><i class="fas fa-cloud-upload-alt"></i> إيداع أسئلة جديدة (صيغة JSON)</h3>
-                <div class="form-group"><label>اسم مجموعة الاختبار (يجب أن يكون مميزاً):</label><input type="text" id="quiz-group-name" placeholder="مثال: الاختبار الشامل للوحدة الأولى"></div>
-                <div class="form-group"><label>كود الـ JSON للأسئلة:</label><textarea id="json-data-input" rows="8" placeholder='[{"question": "اكتب السؤال هنا", "options": ["إجابة 1", "إجابة 2", "إجابة 3", "إجابة 4"], "correct_answer": "إجابة 1"}]'></textarea></div>
-                <button type="button" class="primary-btn" id="process-json-btn" style="padding: 16px 30px;"><i class="fas fa-save"></i> حفظ الأسئلة في البنك الرئيسي</button>
+            <div class="settings-container" style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: var(--text-dark); font-weight: 900; font-size: 18px;"><i class="fas fa-cloud-upload-alt"></i> إيداع أسئلة (JSON)</h3>
+                <div class="form-group"><label>اسم مجموعة الاختبار:</label><input type="text" id="quiz-group-name" placeholder="مثال: الاختبار الشامل للوحدة الأولى"></div>
+                <div class="form-group"><label>كود الـ JSON:</label><textarea id="json-data-input" rows="5" placeholder='[{"question": "السؤال", "options": ["1", "2", "3", "4"], "correct_answer": "1"}]'></textarea></div>
+                <button type="button" class="primary-btn full-width" id="process-json-btn"><i class="fas fa-save"></i> حفظ في البنك</button>
             </div>
             
-            <h3 style="margin-bottom: 20px; color: var(--text-dark); font-weight: 900;"><i class="fas fa-server"></i> المجموعات المتوفرة في البنك:</h3>
+            <h3 style="margin-bottom: 15px; color: var(--text-dark); font-weight: 900; font-size: 18px;"><i class="fas fa-server"></i> المجموعات المتوفرة:</h3>
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>اسم المجموعة (الاختبار)</th><th>عدد الأسئلة الفعلي</th><th>التحكم بالمجموعة</th></tr></thead>
+                    <thead><tr><th>اسم المجموعة</th><th>العدد</th><th>التحكم</th></tr></thead>
                     <tbody id="quiz-groups-table-body"></tbody>
                 </table>
             </div>
@@ -370,24 +404,26 @@
 
         <!-- أكواد التفعيل المخصصة للكورسات -->
         <section id="codes-view" class="view">
-            <div class="section-header"><h2>مولد الأكواد المخصصة للكورسات</h2></div>
-            <p style="color:#ef4444; font-size:16px; font-weight: bold; margin-bottom: 20px; background: #fef2f2; padding: 15px; border-radius: 12px;">🚨 الأكواد التي سيتم توليدها هنا ستكون مقفلة على الكورس الذي ستختاره فقط. لا يمكن لطالب استخدام كود كورس لفتح كورس آخر.</p>
+            <div class="section-header"><h2>مولد الأكواد المخصصة</h2></div>
+            <p style="color:#ef4444; font-size:14px; font-weight: bold; margin-bottom: 20px; background: #fef2f2; padding: 15px; border-radius: 12px;">🚨 الأكواد المولدة هنا مقفلة على الكورس المحدد فقط.</p>
             
-            <div class="settings-container" style="max-width: 100%; margin-bottom: 30px;">
-                <div class="form-row" style="align-items: flex-end;">
+            <div class="settings-container" style="margin-bottom: 30px;">
+                <div class="form-row">
                     <div class="form-group">
-                        <label>اختر الكورس الذي سيفتحه هذا الكود</label>
+                        <label>اختر الكورس</label>
                         <select id="code-course-select" class="form-control" required><option value="" disabled selected>جاري تحميل الكورسات...</option></select>
                     </div>
-                    <div class="form-group"><label>عدد الأكواد المطلوبة</label><input type="number" id="code-count" placeholder="مثال: 50" min="1" max="1000"></div>
-                    <div class="form-group"><label>مدة الصلاحية (أيام)</label><input type="number" id="code-duration" placeholder="اختياري (اتركه لدائم)"></div>
-                    <div class="form-group"><button type="button" id="generate-codes-btn" class="primary-btn full-width" style="padding: 16px;"><i class="fas fa-magic"></i> توليد وحفظ</button></div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group half-width"><label>العدد</label><input type="number" id="code-count" placeholder="مثال: 50"></div>
+                    <div class="form-group half-width"><label>الصلاحية (أيام)</label><input type="number" id="code-duration" placeholder="اتركه لدائم"></div>
+                </div>
+                <button type="button" id="generate-codes-btn" class="primary-btn full-width"><i class="fas fa-magic"></i> توليد وحفظ الأكواد</button>
             </div>
             
             <div class="admin-table-container">
                 <table class="admin-table">
-                    <thead><tr><th>كود التفعيل</th><th>مخصص لكورس</th><th>الحالة</th><th>استخدمه الطالب</th><th>إجراءات</th></tr></thead>
+                    <thead><tr><th>الكود</th><th>مخصص لكورس</th><th>الحالة</th><th>المستخدم</th><th>إجراءات</th></tr></thead>
                     <tbody id="codes-table-body"><tr><td colspan="5" class="text-center" style="padding: 40px; font-weight: bold;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
@@ -395,21 +431,21 @@
 
         <!-- الإعدادات -->
         <section id="settings-view" class="view">
-            <div class="section-header"><h2>إعدادات المنصة والهوية البصرية</h2></div>
+            <div class="section-header"><h2>إعدادات المنصة</h2></div>
             <div class="settings-container">
                 <form id="platform-settings-form" onsubmit="event.preventDefault();">
                     <div class="form-row">
-                        <div class="form-group half-width"><label>اسم المنصة (سيظهر في الشعار)</label><input type="text" id="setting-name" required></div>
-                        <div class="form-group half-width"><label>اسم المعلم (سيظهر في الشهادات)</label><input type="text" id="setting-teacher-name" required></div>
+                        <div class="form-group half-width"><label>اسم المنصة</label><input type="text" id="setting-name" required></div>
+                        <div class="form-group half-width"><label>اسم المعلم</label><input type="text" id="setting-teacher-name" required></div>
                     </div>
-                    <div class="form-group"><label>وصف المنصة (سيظهر للزوار في الرئيسية)</label><textarea id="setting-desc" rows="3" required></textarea></div>
-                    <div class="form-group"><label>رابط صورة المعلم (لرئيسية الزوار)</label><input type="url" id="setting-teacher-image" placeholder="https://..."></div>
-                    <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; margin-top: 30px; font-weight: 900;"><i class="fas fa-link"></i> روابط الدعم والتواصل</h3>
+                    <div class="form-group"><label>وصف المنصة</label><textarea id="setting-desc" rows="3" required></textarea></div>
+                    <div class="form-group"><label>رابط صورة المعلم</label><input type="url" id="setting-teacher-image" placeholder="https://..."></div>
+                    <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-top: 20px; font-weight: 900; font-size: 18px;"><i class="fas fa-link"></i> روابط الدعم والتواصل</h3>
                     <div class="form-row">
-                        <div class="form-group half-width"><label><i class="fab fa-whatsapp" style="color: #10b981;"></i> رقم واتساب (مسبوق بكود الدولة، مثال: 2010...)</label><input type="text" id="setting-whatsapp"></div>
-                        <div class="form-group half-width"><label><i class="fab fa-facebook" style="color: #3b82f6;"></i> رابط صفحة/جروب فيسبوك</label><input type="url" id="setting-facebook" placeholder="https://facebook.com/..."></div>
+                        <div class="form-group half-width"><label><i class="fab fa-whatsapp" style="color: #10b981;"></i> واتساب</label><input type="text" id="setting-whatsapp"></div>
+                        <div class="form-group half-width"><label><i class="fab fa-facebook" style="color: #3b82f6;"></i> فيسبوك</label><input type="url" id="setting-facebook" placeholder="https://facebook.com/..."></div>
                     </div>
-                    <button type="button" id="save-settings-btn" class="primary-btn full-width" style="padding: 18px; font-size: 20px; margin-top: 10px;"><i class="fas fa-save"></i> حفظ ونشر الإعدادات على المنصة</button>
+                    <button type="button" id="save-settings-btn" class="primary-btn full-width" style="margin-top: 10px;"><i class="fas fa-save"></i> حفظ الإعدادات</button>
                 </form>
             </div>
         </section>
@@ -419,8 +455,8 @@
     
     <!-- نافذة إضافة روبوت / طالب وهمي -->
     <div class="modal-overlay" id="bot-modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header"><h2><i class="fas fa-robot"></i> إنشاء طالب منافس (وهمي)</h2><button class="close-modal-btn" onclick="closeModal('bot-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-content">
+            <div class="modal-header"><h2><i class="fas fa-robot"></i> إنشاء منافس (وهمي)</h2><button class="close-modal-btn" onclick="closeModal('bot-modal')"><i class="fas fa-times"></i></button></div>
             <form id="add-bot-form" onsubmit="event.preventDefault();">
                 <div class="form-group"><label>اسم الطالب الوهمي</label><input type="text" id="bot-name" required placeholder="مثال: أحمد محمود"></div>
                 <div class="form-row">
@@ -430,7 +466,7 @@
                     </div>
                     <div class="form-group half-width"><label>النقاط المبدئية</label><input type="number" id="bot-points" required value="0"></div>
                 </div>
-                <button type="button" id="save-bot-btn" class="success-btn full-width" style="padding: 16px; font-size: 18px;"><i class="fas fa-check"></i> إضافة للوحة المتصدرين</button>
+                <button type="button" id="save-bot-btn" class="success-btn full-width"><i class="fas fa-check"></i> إضافة للوحة المتصدرين</button>
             </form>
         </div>
     </div>
@@ -439,31 +475,31 @@
     <div class="modal-overlay" id="points-modal">
         <div class="modal-content" style="max-width: 400px; text-align: center;">
             <div class="modal-header"><h2><i class="fas fa-star" style="color:gold;"></i> تعديل النقاط</h2><button class="close-modal-btn" onclick="closeModal('points-modal')"><i class="fas fa-times"></i></button></div>
-            <h3 id="points-student-name" style="margin-bottom: 20px; font-weight: 900; color: var(--admin-theme);"></h3>
+            <h3 id="points-student-name" style="margin-bottom: 20px; font-weight: 900; color: var(--admin-theme); font-size: 18px;"></h3>
             <div class="form-group"><label style="text-align: right;">النقاط الحالية والجديدة:</label><input type="number" id="points-edit-input" style="font-size: 24px; text-align: center; color: #f59e0b; font-weight: 900;"></div>
-            <button type="button" id="save-points-btn" class="primary-btn full-width" style="padding: 16px;"><i class="fas fa-save"></i> حفظ وتحديث ترتيبه</button>
+            <button type="button" id="save-points-btn" class="primary-btn full-width"><i class="fas fa-save"></i> حفظ وتحديث ترتيبه</button>
         </div>
     </div>
 
     <!-- نافذة تقرير الطالب -->
     <div class="modal-overlay" id="student-report-modal">
-        <div class="modal-content" style="max-width: 650px;">
-            <div class="modal-header"><h2><i class="fas fa-file-invoice"></i> التقرير الأكاديمي الشامل</h2><button class="close-modal-btn" onclick="closeModal('student-report-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-content">
+            <div class="modal-header"><h2><i class="fas fa-file-invoice"></i> تقرير الطالب</h2><button class="close-modal-btn" onclick="closeModal('student-report-modal')"><i class="fas fa-times"></i></button></div>
             <div class="report-section">
                 <h3><i class="fas fa-id-card"></i> البيانات الأساسية</h3>
-                <p><strong>الاسم الرباعي:</strong> <span id="rep-name"></span></p>
-                <p><strong>رقم الهاتف (للتواصل):</strong> <span id="rep-phone" dir="ltr"></span></p>
-                <p><strong>المرحلة الدراسية:</strong> <span id="rep-stage"></span></p>
-                <p><strong>تاريخ الانضمام للمنصة:</strong> <span id="rep-date"></span></p>
+                <p><strong>الاسم:</strong> <span id="rep-name"></span></p>
+                <p><strong>الهاتف:</strong> <span id="rep-phone" dir="ltr"></span></p>
+                <p><strong>المرحلة:</strong> <span id="rep-stage"></span></p>
+                <p><strong>تاريخ الانضمام:</strong> <span id="rep-date"></span></p>
             </div>
             <div class="report-section">
-                <h3><i class="fas fa-chart-line"></i> النشاط والإنجاز الأكاديمي</h3>
-                <p><strong>إجمالي نقاط التقييم:</strong> <span id="rep-points" style="color:#f59e0b; font-weight:900; font-size:22px;"></span> <i class="fas fa-star" style="color:#f59e0b;"></i></p>
-                <p style="margin-top: 15px;"><strong>الشهادات المعتمدة التي حصل عليها:</strong></p>
-                <div id="rep-certs" style="background: white; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); color: #10b981; font-weight: bold;"></div>
+                <h3><i class="fas fa-chart-line"></i> الإنجاز الأكاديمي</h3>
+                <p><strong>النقاط التراكمية:</strong> <span id="rep-points" style="color:#f59e0b; font-weight:900; font-size:20px;"></span> <i class="fas fa-star" style="color:#f59e0b;"></i></p>
+                <p style="margin-top: 10px;"><strong>الشهادات المعتمدة:</strong></p>
+                <div id="rep-certs" style="background: white; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); color: #10b981; font-weight: bold; font-size: 14px;"></div>
                 
-                <p style="font-weight:900; margin-top:20px; color: var(--text-dark);">الكورسات المفعلة في حسابه حالياً:</p>
-                <ul style="list-style:circle; padding-right:20px; color:var(--text-muted); line-height: 1.8;" id="rep-courses-list"></ul>
+                <p style="font-weight:900; margin-top:15px; color: var(--text-dark);">الكورسات المفعلة:</p>
+                <ul style="list-style:circle; padding-right:20px; color:var(--text-muted); font-size: 14px;" id="rep-courses-list"></ul>
             </div>
         </div>
     </div>
@@ -471,19 +507,19 @@
     <!-- نافذة إدارة اشتراكات الطالب -->
     <div class="modal-overlay" id="student-manage-modal">
         <div class="modal-content">
-            <div class="modal-header"><h2><i class="fas fa-user-lock"></i> إدارة صلاحيات واشتراكات الطالب</h2><button class="close-modal-btn" onclick="closeModal('student-manage-modal')"><i class="fas fa-times"></i></button></div>
-            <h3 id="manage-student-name" style="margin-bottom: 25px; color: var(--admin-theme); font-weight: 900; background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);"></h3>
+            <div class="modal-header"><h2><i class="fas fa-user-lock"></i> الصلاحيات</h2><button class="close-modal-btn" onclick="closeModal('student-manage-modal')"><i class="fas fa-times"></i></button></div>
+            <h3 id="manage-student-name" style="margin-bottom: 20px; color: var(--admin-theme); font-weight: 900; background: var(--bg-color); padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 16px;"></h3>
             
-            <div style="margin-bottom: 30px;">
-                <p style="font-weight: 900; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-minus-circle" style="color: #ef4444;"></i> إيقاف أو إزالة كورس مفعل من حساب الطالب:</p>
+            <div style="margin-bottom: 25px;">
+                <p style="font-weight: 900; margin-bottom: 10px; font-size: 15px;"><i class="fas fa-minus-circle" style="color: #ef4444;"></i> سحب كورس من الطالب:</p>
                 <ul class="student-courses-list" id="student-courses-list"></ul>
             </div>
             
-            <div style="border-top: 3px dashed var(--border-color); padding-top: 25px;">
-                <p style="font-weight: 900; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-plus-circle" style="color: #10b981;"></i> تفعيل كورس يدوياً للطالب (بونص إداري):</p>
+            <div style="border-top: 3px dashed var(--border-color); padding-top: 20px;">
+                <p style="font-weight: 900; margin-bottom: 10px; font-size: 15px;"><i class="fas fa-plus-circle" style="color: #10b981;"></i> تفعيل كورس يدوياً (بونص):</p>
                 <div class="form-row">
-                    <select id="manual-add-course-select" class="form-control" style="flex: 2; font-weight: bold;"></select>
-                    <button id="manual-add-course-btn" class="primary-btn" style="flex: 1; background: var(--success-gradient);"><i class="fas fa-check"></i> منح التفعيل</button>
+                    <select id="manual-add-course-select" class="form-control" style="flex: 2; font-weight: bold; font-size: 14px; padding: 10px;"></select>
+                    <button id="manual-add-course-btn" class="primary-btn" style="flex: 1; background: var(--success-gradient); padding: 10px;"><i class="fas fa-check"></i> منح</button>
                 </div>
             </div>
         </div>
@@ -491,31 +527,34 @@
 
     <!-- نافذة عرض وتعديل أسئلة الاختبار -->
     <div class="modal-overlay" id="manage-questions-modal">
-        <div class="modal-content" style="max-width: 800px;">
-            <div class="modal-header"><h2 id="mq-group-title" style="font-size: 24px;"><i class="fas fa-tasks"></i> أسئلة الاختبار</h2><button class="close-modal-btn" onclick="closeModal('manage-questions-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal-content">
+            <div class="modal-header"><h2 id="mq-group-title" style="font-size: 20px;"><i class="fas fa-tasks"></i> أسئلة الاختبار</h2><button class="close-modal-btn" onclick="closeModal('manage-questions-modal')"><i class="fas fa-times"></i></button></div>
+            <p style="color:var(--text-muted); font-size:13px; font-weight: bold; margin-bottom: 15px; background: var(--bg-color); padding: 10px; border-radius: 8px;">يمكنك مسح أي سؤال فردي من هنا.</p>
             <ul class="questions-list" id="questions-list-container"></ul>
         </div>
     </div>
 
-    <!-- نافذة إضافة/تعديل كورس -->
+    <!-- نافذة إضافة/تعديل كورس (مضاف إليها حقل السعر) -->
     <div class="modal-overlay" id="course-modal">
         <div class="modal-content">
             <div class="modal-header"><h2 id="modal-course-title"><i class="fas fa-folder-plus"></i> كورس</h2><button class="close-modal-btn" onclick="closeModal('course-modal')"><i class="fas fa-times"></i></button></div>
             <form id="add-course-form" onsubmit="event.preventDefault();">
-                <div class="form-group"><label>اسم الكورس (واضح ومميز)</label><input type="text" id="course-name" required></div>
-                <div class="form-group"><label>وصف الكورس (الذي سيجذب الطلاب)</label><textarea id="course-desc" rows="3" required></textarea></div>
+                <div class="form-group"><label>اسم الكورس</label><input type="text" id="course-name" required></div>
+                <div class="form-group"><label>وصف الكورس</label><textarea id="course-desc" rows="3" required></textarea></div>
+                
                 <div class="form-row">
                     <div class="form-group half-width">
-                        <label>نوع الكورس</label>
-                        <select id="course-type" required><option value="paid">باشتراك (مدفوع بأكواد)</option><option value="free">مجاني (مفتوح للجميع)</option></select>
+                        <label>النوع</label>
+                        <select id="course-type" required><option value="paid">باشتراك (أكواد)</option><option value="free">مجاني</option></select>
                     </div>
                     <div class="form-group half-width">
-                        <label>السعر (اختياري، للزوار)</label>
+                        <label>السعر (للزوار)</label>
                         <input type="text" id="course-price" placeholder="مثال: 150 ج.م">
                     </div>
                 </div>
-                <div class="form-group"><label>رابط صورة الغلاف (Cover URL)</label><input type="url" id="course-image" placeholder="https://..."></div>
-                <button type="button" id="save-course-btn" class="primary-btn full-width" style="padding: 16px; font-size: 18px;"><i class="fas fa-save"></i> اعتماد وحفظ الكورس</button>
+                
+                <div class="form-group"><label>رابط صورة الغلاف</label><input type="url" id="course-image" placeholder="https://..."></div>
+                <button type="button" id="save-course-btn" class="primary-btn full-width"><i class="fas fa-save"></i> حفظ الكورس</button>
             </form>
         </div>
     </div>
@@ -527,21 +566,21 @@
             <form id="add-lesson-form" onsubmit="event.preventDefault();">
                 <div class="form-row">
                     <div class="form-group half-width"><label>عنوان الدرس</label><input type="text" id="lesson-title" required></div>
-                    <div class="form-group half-width"><label>الكورس التابع له</label><select id="lesson-course-select" required><option value="" disabled selected>جاري تحميل الكورسات...</option></select></div>
+                    <div class="form-group half-width"><label>الكورس التابع له</label><select id="lesson-course-select" required><option value="" disabled selected>جاري التحميل...</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group half-width"><label>رابط الفيديو المسجل (يوتيوب أو غيره)</label><input type="url" id="lesson-video" placeholder="https://youtube.com/..."></div>
-                    <div class="form-group half-width"><label>رابط صورة مصغرة (اختياري)</label><input type="url" id="lesson-image" placeholder="https://..."></div>
+                    <div class="form-group half-width"><label>رابط الفيديو</label><input type="url" id="lesson-video" placeholder="https://youtube.com/..."></div>
+                    <div class="form-group half-width"><label>صورة مصغرة (اختياري)</label><input type="url" id="lesson-image" placeholder="https://..."></div>
                 </div>
-                <div class="form-group" style="background: white; margin-bottom: 25px; border-radius: 12px; overflow: hidden;">
-                    <label style="padding: 10px; background: var(--bg-color);">الشرح المقالي / المذكرات النصية (تظهر أسفل الفيديو)</label>
-                    <div id="editor-container" style="height: 250px;"></div>
+                <div class="form-group" style="background: white; margin-bottom: 20px; border-radius: 12px; overflow: hidden;">
+                    <label style="padding: 10px; background: var(--bg-color);">الشرح المقالي / المذكرات</label>
+                    <div id="editor-container"></div>
                 </div>
-                <div class="form-group" style="margin-bottom: 35px; background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div class="form-group" style="margin-bottom: 25px; background: var(--bg-color); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <label style="color: var(--main-theme);"><i class="fas fa-brain"></i> تقييم الدرس (ربط باختبار)</label>
                     <select id="lesson-quiz-select" style="border-color: var(--main-theme); font-weight: 900;"><option value="none">بدون اختبار حالياً</option></select>
                 </div>
-                <button type="button" id="save-lesson-btn" class="primary-btn full-width" style="padding: 18px; font-size: 20px;"><i class="fas fa-cloud-upload-alt"></i> نشر الدرس الآن</button>
+                <button type="button" id="save-lesson-btn" class="primary-btn full-width"><i class="fas fa-cloud-upload-alt"></i> نشر الدرس</button>
             </form>
         </div>
     </div>
@@ -551,21 +590,21 @@
         <div class="modal-content">
             <div class="modal-header"><h2 id="modal-live-title"><i class="fas fa-satellite-dish"></i> إعداد بث مباشر</h2><button class="close-modal-btn" onclick="closeModal('live-modal')"><i class="fas fa-times"></i></button></div>
             <form id="add-live-form" onsubmit="event.preventDefault();">
-                <div class="form-group"><label>عنوان البث (مثال: مراجعة شاملة ليلة الامتحان)</label><input type="text" id="live-title" required></div>
-                <div class="form-group"><label>الكورس التابع له هذا البث</label><select id="live-course-select" required><option value="" disabled selected>جاري التحميل...</option></select></div>
-                <div class="form-group"><label>رابط منصة البث (Zoom / Meet / YouTube Live)</label><input type="url" id="live-url" required placeholder="https://..."></div>
+                <div class="form-group"><label>عنوان البث</label><input type="text" id="live-title" required></div>
+                <div class="form-group"><label>الكورس التابع له</label><select id="live-course-select" required><option value="" disabled selected>جاري التحميل...</option></select></div>
+                <div class="form-group"><label>رابط منصة البث (Zoom/Meet)</label><input type="url" id="live-url" required placeholder="https://..."></div>
                 <div class="form-row">
-                    <div class="form-group half-width"><label>موعد البث (تاريخ ووقت)</label><input type="text" id="live-time" placeholder="مثال: غداً الساعة 8 مساءً" required></div>
+                    <div class="form-group half-width"><label>الموعد</label><input type="text" id="live-time" placeholder="مثال: غداً 8 مساءً" required></div>
                     <div class="form-group half-width">
-                        <label>حالة البث</label>
+                        <label>الحالة</label>
                         <select id="live-status" required>
                             <option value="مجدول">⏳ مجدول (لم يبدأ)</option>
-                            <option value="مباشر">🔴 مباشر الآن (Live)</option>
+                            <option value="مباشر">🔴 مباشر الآن</option>
                             <option value="انتهى">🛑 انتهى</option>
                         </select>
                     </div>
                 </div>
-                <button type="button" id="save-live-btn" class="danger-btn full-width" style="padding: 16px; font-size: 18px;"><i class="fas fa-broadcast-tower"></i> حفظ ونشر موعد البث</button>
+                <button type="button" id="save-live-btn" class="danger-btn full-width"><i class="fas fa-broadcast-tower"></i> حفظ الموعد</button>
             </form>
         </div>
     </div>
@@ -574,7 +613,7 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <!-- ========================================================= -->
-    <!--                       4. أكواد البرمجة (JavaScript)       -->
+    <!--                       4. أكواد البرمجة (Firebase)         -->
     <!-- ========================================================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -692,17 +731,17 @@
             window.allUsers.sort((a,b) => (b.points || 0) - (a.points || 0)).forEach(s => {
                 const isBot = s.role === 'bot';
                 const nameDisplay = isBot ? `<span class="bot-badge"><i class="fas fa-robot"></i> منافس وهمي</span> ${s.name}` : s.name;
-                const phoneDisplay = isBot ? `<span style="color:var(--text-muted); font-size:12px;">مُدار إدارياً</span>` : s.phone;
+                const phoneDisplay = isBot ? `<span style="color:var(--text-muted); font-size:11px;">مُدار إدارياً</span>` : s.phone;
                 const reportBtn = isBot ? '' : `<button class="action-btn view-report" onclick="window.showStudentReport('${s.id}')" title="التقرير الأكاديمي"><i class="fas fa-file-invoice"></i></button>`;
                 const manageBtn = isBot ? '' : `<button class="action-btn manage" onclick="window.manageStudentSubscriptions('${s.id}')" title="التحكم بالاشتراكات والكورسات"><i class="fas fa-user-lock"></i></button>`;
 
                 tbody.innerHTML += `
                 <tr style="${isBot ? 'background-color: #f8fafc;' : ''}">
-                    <td style="font-weight:900; font-size: 16px;">${nameDisplay}</td>
-                    <td dir="ltr" style="font-weight: bold; color: var(--text-muted);">${phoneDisplay}</td>
+                    <td style="font-weight:900; font-size: 15px;">${nameDisplay}</td>
+                    <td dir="ltr" style="font-weight: bold; color: var(--text-muted); font-size: 14px;">${phoneDisplay}</td>
                     <td><span class="badge badge-info">${s.stage}</span></td>
-                    <td style="color:#f59e0b; font-weight:900; font-size: 18px;">${s.points || 0} <i class="fas fa-star"></i></td>
-                    <td>
+                    <td style="color:#f59e0b; font-weight:900; font-size: 16px;">${s.points || 0} <i class="fas fa-star"></i></td>
+                    <td style="white-space: nowrap;">
                         ${reportBtn}
                         ${manageBtn}
                         <button class="action-btn edit" onclick="window.editPoints('${s.id}', '${s.name}', ${s.points || 0})" title="تعديل النقاط يدوياً لرفع/خفض ترتيبه"><i class="fas fa-star-half-alt"></i></button>
@@ -830,10 +869,10 @@
 
                 if(tbody) tbody.innerHTML += `
                 <tr>
-                    <td style="font-weight:900; font-size: 17px;">${c.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${c.name}</td>
+                    <td style="font-weight:900; font-size: 15px;">${c.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${c.name}</td>
                     <td>${priceDisplay}</td>
                     <td><span class="badge ${c.type === 'paid' ? 'badge-paid' : 'badge-free'}">${c.type === 'paid' ? 'مغلق بأكواد' : 'مجاني للجميع'}</span></td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <button class="action-btn edit" onclick="window.editCourse('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
                         <button class="action-btn delete" onclick="window.deleteDocument('courses', '${d.id}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
                     </td>
@@ -874,7 +913,7 @@
                 else { courseData.createdAt = new Date().toLocaleDateString('ar-EG'); await addDoc(collection(db, "courses"), courseData); window.showAdminToast("تمت الإضافة."); }
                 document.getElementById('add-course-form').reset(); closeModal('course-modal');
             } catch (err) {} 
-            finally { e.target.innerHTML = '<i class="fas fa-save"></i> حفظ'; e.target.disabled = false; }
+            finally { e.target.innerHTML = '<i class="fas fa-save"></i> حفظ الكورس'; e.target.disabled = false; }
         });
 
         // ================= إدارة الدروس المسجلة =================
@@ -887,10 +926,10 @@
                 const l = d.data(); const cName = window.globalCourses[l.courseId] || "كورس محذوف";
                 tbody.innerHTML += `
                 <tr>
-                    <td style="font-weight:900; font-size: 16px;">${l.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${l.title}</td>
-                    <td style="font-size:14px; font-weight:bold; color:var(--text-muted);">${cName}</td>
-                    <td><span class="badge ${l.quizGroup !== 'none' ? 'badge-info' : 'badge-warning'}">${l.quizGroup !== 'none' ? '<i class="fas fa-check"></i> ' + l.quizGroup : 'محتوى بدون تقييم'}</span></td>
-                    <td>
+                    <td style="font-weight:900; font-size: 15px;">${l.imageUrl ? `<i class="fas fa-image" style="color:var(--admin-accent);"></i> ` : ''}${l.title}</td>
+                    <td style="font-size:13px; font-weight:bold; color:var(--text-muted);">${cName}</td>
+                    <td><span class="badge ${l.quizGroup !== 'none' ? 'badge-info' : 'badge-warning'}">${l.quizGroup !== 'none' ? '<i class="fas fa-check"></i> ' + l.quizGroup : 'بدون تقييم'}</span></td>
+                    <td style="white-space: nowrap;">
                         <button class="action-btn edit" onclick="window.editLesson('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
                         <button class="action-btn delete" onclick="window.deleteDocument('lessons', '${d.id}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
                     </td>
@@ -946,11 +985,11 @@
                 
                 tbody.innerHTML += `
                 <tr>
-                    <td style="font-weight:900; font-size: 16px; color: ${l.status === 'مباشر' ? '#ef4444' : 'var(--text-dark)'};">${l.status === 'مباشر' ? '<span class="live-indicator"></span>' : ''} ${l.title}</td>
-                    <td style="font-size:14px; font-weight:bold;">${cName}</td>
-                    <td style="font-weight:bold; color:var(--text-muted);">${l.time}</td>
+                    <td style="font-weight:900; font-size: 15px; color: ${l.status === 'مباشر' ? '#ef4444' : 'var(--text-dark)'};">${l.status === 'مباشر' ? '<span class="live-indicator"></span>' : ''} ${l.title}</td>
+                    <td style="font-size:13px; font-weight:bold;">${cName}</td>
+                    <td style="font-weight:bold; color:var(--text-muted); font-size: 13px;">${l.time}</td>
                     <td><span class="badge ${sBadge}">${l.status}</span></td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <button class="action-btn edit" onclick="window.editLive('${d.id}')" title="تعديل"><i class="fas fa-pen"></i></button>
                         <button class="action-btn delete" onclick="window.deleteDocument('live_sessions', '${d.id}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
                     </td>
@@ -990,7 +1029,7 @@
                 else { await addDoc(collection(db, "live_sessions"), liveData); window.showAdminToast("تم الجدولة."); }
                 document.getElementById('add-live-form').reset(); closeModal('live-modal'); 
             } catch (err) {} 
-            finally { e.target.innerHTML = '<i class="fas fa-broadcast-tower"></i> حفظ'; e.target.disabled = false; }
+            finally { e.target.innerHTML = '<i class="fas fa-broadcast-tower"></i> حفظ الموعد'; e.target.disabled = false; }
         });
 
         // ================= إدارة بنك الأسئلة =================
@@ -1007,9 +1046,9 @@
                 let count = window.allQuestions.filter(x => x.group === g).length;
                 if(tbody) tbody.innerHTML += `
                 <tr>
-                    <td style="font-weight:900; color:var(--admin-theme); font-size: 16px;">${g}</td>
+                    <td style="font-weight:900; color:var(--admin-theme); font-size: 15px;">${g}</td>
                     <td><span class="badge badge-info">${count} سؤال</span></td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <button class="action-btn view-report" onclick="window.viewQuestionsGroup('${g}')"><i class="fas fa-tasks"></i></button>
                         <button class="action-btn delete" onclick="window.deleteQuestionGroup('${g}')"><i class="fas fa-bomb"></i></button>
                     </td>
@@ -1024,7 +1063,7 @@
             window.allQuestions.filter(x => x.group === groupName).forEach((q, idx) => {
                 list.innerHTML += `
                 <li class="question-item">
-                    <div class="q-text"><span style="color:var(--text-muted); font-size: 14px;">#${idx+1}</span> ${q.questionData.question} <br><span style="color: #10b981; font-weight: 900; font-size: 15px;"><i class="fas fa-check-double"></i> الإجابة الصحيحة: ${q.questionData.correct_answer}</span></div>
+                    <div class="q-text"><span style="color:var(--text-muted); font-size: 14px;">#${idx+1}</span> ${q.questionData.question} <br><span style="color: #10b981; font-weight: 900; font-size: 14px;"><i class="fas fa-check-double"></i> الإجابة: ${q.questionData.correct_answer}</span></div>
                     <button class="action-btn delete" onclick="window.deleteDocument('questions', '${q.id}')"><i class="fas fa-times"></i></button>
                 </li>`;
             });
@@ -1051,7 +1090,7 @@
                 window.showAdminToast(`تم إيداع ${arr.length} سؤال لـ (${gName}).`);
                 document.getElementById('quiz-group-name').value = ''; document.getElementById('json-data-input').value = '';
             } catch (err) { alert(`❌ كود JSON غير صحيح.`); }
-            finally { e.target.innerHTML = '<i class="fas fa-save"></i> حفظ'; e.target.disabled = false; }
+            finally { e.target.innerHTML = '<i class="fas fa-save"></i> حفظ في البنك'; e.target.disabled = false; }
         });
 
         // ================= مولد الأكواد المخصصة للكورسات (Strict Binding) =================
@@ -1070,7 +1109,7 @@
                     code, assignedCourseId: courseId, status: "غير مستخدم", usedBy: "", durationDays: duration ? parseInt(duration) : null, createdAt: new Date().toLocaleDateString('ar-EG') 
                 });
             }
-            e.target.innerHTML = '<i class="fas fa-magic"></i> توليد وحفظ'; e.target.disabled = false; 
+            e.target.innerHTML = '<i class="fas fa-magic"></i> توليد وحفظ الأكواد'; e.target.disabled = false; 
             window.showAdminToast(`تم صك ${count} كود مخصص لهذا الكورس.`);
         });
 
@@ -1112,11 +1151,11 @@
 
                 tbody.innerHTML += `
                 <tr>
-                    <td style="font-family:monospace; font-weight:900; color:var(--admin-accent); font-size:18px; letter-spacing: 2px;">${c.code}</td>
+                    <td style="font-family:monospace; font-weight:900; color:var(--admin-accent); font-size:16px; letter-spacing: 2px;">${c.code}</td>
                     <td style="font-size:13px; font-weight:bold; color:var(--text-muted);">${cName}</td>
                     <td><span class="badge ${badgeClass}">${c.status}</span></td>
-                    <td style="font-size:14px;">${userDisplay}</td>
-                    <td>
+                    <td style="font-size:13px;">${userDisplay}</td>
+                    <td style="white-space: nowrap;">
                         ${toggleBtnHtml}
                         <button class="action-btn delete" onclick="window.deleteDocument('codes', '${d.id}')"><i class="fas fa-trash-alt"></i></button>
                     </td>
